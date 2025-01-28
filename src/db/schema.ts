@@ -9,6 +9,8 @@ import {
 } from "drizzle-orm/mysql-core";
 import { relations } from "drizzle-orm";
 
+// TODO: Add validation
+
 const timeStamps = {
   created_at: timestamp().defaultNow(),
   updated_at: timestamp(),
@@ -50,26 +52,47 @@ export const orders = mysqlTable("orders", {
 //* Relations
 
 export const userRelations = relations(users, ({ many }) => ({
-  locations: many(locations),
+  locations: many(locations, {
+    relationName: "user_locations",
+  }),
+  orders: many(orders, {
+    relationName: "user_orders",
+  }),
 }));
 
 export const locationRelations = relations(locations, ({ one }) => ({
   user: one(users, {
     fields: [locations.userId],
     references: [users.id],
+    relationName: "user_locations",
   }),
   order: one(orders, {
     fields: [locations.userId],
     references: [orders.id],
+    relationName: "order_location",
   }),
 }));
 
 export const orderRelations = relations(orders, ({ one }) => ({
-  users: one(users),
-  products: one(products),
-  locations: one(locations),
+  users: one(users, {
+    fields: [orders.userId],
+    references: [users.id],
+    relationName: "user_orders",
+  }),
+  products: one(products, {
+    fields: [orders.productId],
+    references: [products.id],
+    relationName: "product_orders",
+  }),
+  locations: one(locations, {
+    fields: [orders.locationId],
+    references: [locations.id],
+    relationName: "order_location",
+  }),
 }));
 
 export const productRelations = relations(products, ({ many }) => ({
-  locations: many(orders),
+  locations: many(orders, {
+    relationName: "product_orders",
+  }),
 }));

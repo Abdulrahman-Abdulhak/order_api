@@ -1,4 +1,4 @@
-import { FirstChar } from "../../types/index.js";
+import { FirstChar } from "@core/types/index.js";
 
 type Mapping = {
   [key in "d" | "i" | "f"]: number;

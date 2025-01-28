@@ -1,20 +1,17 @@
 import { drizzle } from "drizzle-orm/mysql2";
+import { initEnv } from "../core/index.js";
 
-let db: ReturnType<typeof drizzle> = null;
-export const orm = () => {
-  if (!db) {
-    const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
-    db = drizzle({
-      connection: {
-        host: DB_HOST,
-        user: DB_USER,
-        password: DB_PASSWORD,
-        database: DB_NAME,
-      },
-    });
-  }
+initEnv();
 
-  return db;
-};
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
+export const db = drizzle({
+  connection: {
+    host: DB_HOST,
+    user: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_NAME,
+    port: DB_PORT,
+  },
+});
 
 export * from "./schema.js";

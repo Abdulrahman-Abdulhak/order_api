@@ -1,5 +1,3 @@
-import { print } from "../print/print.js";
-
 type Repeatable<Params extends [] = never, Return = never> =
   | ((...args: Params) => Return)
   | string;
@@ -28,7 +26,7 @@ export const repeat = <Params extends [] = never>(
 type test = Parameters<typeof repeat>;
 //   ^?
 
-repeat(add, 2, 1, 2);
+// repeat(add, 2, 1, 2);
 
 function add(a: number, b: number) {
   return a + b;

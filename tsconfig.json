@@ -5,7 +5,16 @@
     "target": "ES2020",
     "sourceMap": true,
     "outDir": "dist",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "@core/*": ["src/core/*"],
+      "@errors/*": ["src/errors/*"],
+      "@middleware/*": ["src/middleware/*"],
+      "@db/*": ["src/db/*"]
+    }
   },
   "include": ["src/**/*"]
 }
